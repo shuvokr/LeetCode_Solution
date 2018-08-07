@@ -1,0 +1,20 @@
+// https://leetcode.com/problems/stone-game/description/
+
+class Solution {
+public:
+    int mamo[501][501][2];
+    vector<int> p;
+    bool stoneGame(vector<int>& piles) {
+        memset(mamo, -1, sizeof mamo);
+        p = piles;
+        return DP(0, piles.size() - 1, true);
+    }
+    int DP(int L, int R, bool flag)
+    {
+        if(L > R) return 0;
+        if(mamo[L][R][flag] != -1) return mamo[L][R][flag];
+        if(flag)
+            return mamo[L][R][flag] = max(p[L] + DP(L + 1, R, false), p[R] + DP(L, R - 1, false));
+        else return mamo[L][R][flag] = max(DP(L + 1, R, true), DP(L, R - 1, true));
+    }
+};
