@@ -1,0 +1,25 @@
+// https://leetcode.com/problems/minimum-ascii-delete-sum-for-two-strings/description/
+
+class Solution {
+public:
+    int mamo[1001][1001];
+    string a, b;
+    int minimumDeleteSum(string s1, string s2) {
+        memset(mamo, -1, sizeof mamo);
+        int total = 0; a = s1; b = s2; // 3 var
+        
+        for(int i = s1.size() - 1; i > -1; i--) total += s1[i];
+        for(int i = s2.size() - 1; i > -1; i--) total += s2[i];
+        
+        return total - DP(s1.size() - 1, s2.size() - 1);
+    }
+    int DP(int s1, int s2)
+    {
+        if(s1 < 0 || s2 < 0) return 0;
+        int &ret = mamo[s1][s2];
+        if(ret != -1) return ret; ret = 0;
+        
+        if(a[s1] == b[s2]) ret = a[s1] + b[s2] + DP(s1 - 1, s2 - 1);
+        return ret = max(ret, max(DP(s1 - 1, s2), DP(s1, s2 - 1)));
+    }
+};
