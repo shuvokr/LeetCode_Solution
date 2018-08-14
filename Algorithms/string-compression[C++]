@@ -1,0 +1,26 @@
+// https://leetcode.com/problems/string-compression/description/
+
+class Solution {
+public:
+    template<class T> string toString(T n){ostringstream oss;oss<<n;oss.flush();return oss.str();}
+    int compress(vector<char>& chars) {
+        int ret = 0, i = 0, len = chars.size();
+        vector<char> v;
+        char ch = chars[0];
+        for(int i = 0, cou; i < len; i++)
+        {
+            ch = chars[i]; cou = 0;
+            while(i < len && ch == chars[i]) i++, cou++; i--;
+            ret++;
+            ret += cou == 1 ? 0 : log10(cou) + 1;
+            v.push_back(ch);
+            if(cou > 1)
+            {
+                string str = toString(cou);
+                for(int k = 0; k < str.size(); k++) v.push_back(str[k]);
+            }
+        }
+        chars = v;
+        return ret;
+    }
+};
