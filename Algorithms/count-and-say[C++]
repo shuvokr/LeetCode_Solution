@@ -1,0 +1,26 @@
+// https://leetcode.com/problems/count-and-say/description/
+
+class Solution {
+public:
+    template<class T> string toString(T n){ostringstream oss;oss<<n;oss.flush();return oss.str();}
+    string countAndSay(int n) {
+        string str = "1", tmp;
+        if(n == 1) return str;
+        n--;
+        while(n--)
+        {
+            tmp = str;
+            str = "";
+            int i = 0, len = tmp.size();
+            for(; i < len; i++)
+            {
+                char ch = tmp[i];
+                int cou = 0;
+                while(i < len && ch == tmp[i]) cou++, i++; i--;
+                str = str + toString(cou);
+                str = str + ch;
+            }
+        }
+        return str;
+    }
+};
