@@ -1,0 +1,20 @@
+//https://leetcode.com/problems/custom-sort-string/description/
+
+class Solution {
+public:
+    string customSortString(string S, string T) {
+        int lens = S.size(), lent = T.size();
+        string ret = "";
+        bool mark[ 26 ] = {false};
+        for(int i = 0; i < lens; i++)
+        {
+            mark[ S[i] - 'a' ] = true;
+            for(int j = 0; j < lent; j++)
+                if(T[j] == S[i]) ret = ret + S[i];
+        }
+        for(int j = 0; j < lent; j++)
+            if(mark[ T[j] - 'a' ]) continue;
+            else ret = ret + T[j];
+        return ret;
+    }
+};
